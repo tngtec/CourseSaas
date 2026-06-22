@@ -1,0 +1,28 @@
+  body {
+      background-color: #f0f2f5;
+    }
+    .login-container {
+      max-width: 400px;
+      margin: 80px auto;
+      padding: 30px;
+      background-color: rgb(163, 192, 255);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .logo {
+      width: 60px;
+      margin-bottom: 20px;
+    }
+    .login-container label {
+      text-align: left;
+      display: block;
+    }
+    .forgot-link {
+      font-size: 0.9rem;
+      color: #0d6efd;
+      text-decoration: none;
+    }
+    .forgot-link:hover {
+      text-decoration: underline;
+      color: #0a58ca;
+    }

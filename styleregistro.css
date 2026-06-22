@@ -1,0 +1,32 @@
+
+
+    body {
+     margin: 0;
+     padding: 2rem;
+     background-color: #f3f4f6;
+
+
+    }
+    .register-container {
+      max-width: 400px;
+      margin: 80px auto;
+      padding: 30px;
+      background-color: rgb(235, 240, 250);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .logo {
+      width: 60px;
+      margin-bottom: 20px;
+    }
+    .register-container label {
+      display: block;
+    }
+    .link-login {
+      font-size: 0.9rem;
+      text-decoration: none;
+      color: #0d6efd;
+    }
+    .link-login:hover {
+      text-decoration: underline;
+    }

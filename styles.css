@@ -1,0 +1,114 @@
+/* styles.css */
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  line-height: 1.6;
+  background: #f4f8fb;
+  color: #333;
+}
+
+/* Header */
+.header {
+  background-color: #0057b7;
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header .logo {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.nav a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+  background: white;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  color: #1a1a1a;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.btn {
+  background: #b9ff07;
+  color: #333;
+  padding: 12px 25px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.btn:hover {
+  background: #e0a800;
+}
+
+
+.btn-with-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px; /* Espacio entre el botón y la imagen */
+  margin-top: 20px;
+}
+
+/* Imagen más pequeña y ajustada */
+.laptop-img {
+  max-width: 180px;
+  height: auto;
+}
+
+/* En pantallas grandes: mostrar el botón y la imagen uno al lado del otro */
+@media (min-width: 768px) {
+  .btn-with-image {
+    flex-direction: row;
+  }
+}
+
+
+/* Estilo personalizado para imagen de laptop */
+
+@media (min-width: 992px) {
+  .laptop-img {
+    max-width: 180px;
+    height: auto;
+    margin-left: 20px;
+  }
+
+  .btn-with-image {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px; /* Espacio entre botón e imagen */
+  }
+}
+
