@@ -156,13 +156,13 @@ $resultado = mysqli_query($conexion, $query);
                                     <td>
                                         <div class="actions" style="justify-content: center;">
                                            <button class="btn-action btn-show" title="Mostrar" onclick="window.location.href='ver_alumno.php?cedula=<?php echo $reg['cedula']; ?>'">
-                                            <i class="fa-regular fa-eye"></i> Mostrar
+                                            <i class="fa-regular fa-eye"></i>
                                             </button>
-                                            <button class="btn-action btn-edit" title="Modificar" onclick="abrirModal('modificar', '<?php echo $reg['cedula']; ?>', '<?php echo htmlspecialchars($reg['nombre']); ?>', '<?php echo htmlspecialchars($reg['mail']); ?>', '<?php echo htmlspecialchars($nombreCurso); ?>')">
-                                                <i class="fa-solid fa-pen"></i> Modificar
-                                            </button>
+                                            <button class="btn-action btn-edit" title="Modificar" onclick="window.location.href='modificar_alumno.php?cedula=<?php echo $reg['cedula']; ?>'">
+                                           <i class="fa-solid fa-pen"></i> 
+                                          </button>
                                             <button class="btn-action btn-delete" title="Eliminar" onclick="confirmarEliminar('<?php echo $reg['cedula']; ?>')">
-                                                <i class="fa-solid fa-trash"></i> Eliminar
+                                                <i class="fa-solid fa-trash"></i> 
                                             </button>
                                         </div>
                                     </td>
