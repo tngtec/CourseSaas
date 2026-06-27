@@ -11,6 +11,8 @@ Sistema desarrollado para la gestión integral de alumnos y cursos, enfocado en 
 ## 📋 Funcionalidades Principales
 * **Autenticación:** Sistema de Login y Registro seguro para usuarios.
 * **Gestión de Alumnos:** CRUD completo para gestionar la información de los estudiantes.
+* **Gestión de Cursos:** Módulo para la creación, edición y administración de cursos académicos.
+* **Reportes:** Generación de informes detallados sobre el estado de alumnos y cursos.
 * **Filtros Dinámicos:** Búsqueda y filtrado de alumnos por curso para una mejor organización.
 * **Dashboard:** Panel central para la administración del sistema.
 
