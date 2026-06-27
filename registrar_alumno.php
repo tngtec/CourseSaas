@@ -178,10 +178,10 @@ if (!isset($_SESSION['usuario'])) {
                         <label for="curso">Seleccione el Curso</label>
                         <select id="curso" name="codigocurso" required>
                             <option value="" disabled selected>Elija una especialidad...</option>
-                            <option value="1">PHP - Backend Básico</option>
-                            <option value="2">ASP - Inglés Avanzado</option>
-                            <option value="3">Cursos Iny</option>
-                            <option value="4">Web Sairs - Frontend</option>
+                            <option value="1">PHP </option>
+                            <option value="2">ASP </option>
+                            <option value="3">JSP</option>
+                            
                         </select>
                     </div>
 

@@ -3,11 +3,21 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Opcional: Descomenta estas líneas si quieres proteger la vista
-// if (!isset($_SESSION['usuario'])) {
-//     header("Location: login.php");
-//     exit();
-// }
+if (!isset($_SESSION['usuario'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$conexion = mysqli_connect("localhost", "root", "", "base1") or die("Problemas con la conexión");
+
+// Consulta que une cursos con alumnos y cuenta los inscritos
+$query = "SELECT c.codigo, c.nombre_curso, c.profesor, c.estado, 
+          COUNT(a.cedula) as total_alumnos 
+          FROM cursos c 
+          LEFT JOIN alumnos a ON c.codigo = a.codigocurso 
+          GROUP BY c.codigo";
+
+$resultado = mysqli_query($conexion, $query);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -17,198 +27,6 @@ if (session_status() === PHP_SESSION_NONE) {
     <title>CourseSaas - Gestión de Cursos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="estilo.css">
-    
-    <style>
-        body {
-            display: flex;
-            margin: 0;
-            background-color: #f0f2f5;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-        }
-
-        .main-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 40px;
-            background-color: transparent;
-        }
-
-        .search-container {
-            position: relative;
-            width: 350px;
-        }
-
-        .search-container input {
-            width: 100%;
-            padding: 12px 20px 12px 45px;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-            background-color: #ffffff;
-            font-size: 14px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
-            outline: none;
-            transition: all 0.2s;
-        }
-
-        .search-container input:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
-        }
-
-        .search-container i {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #a0aec0;
-            font-size: 16px;
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .user-profile img {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .content-wrapper {
-            padding: 0 40px 40px 40px;
-        }
-
-        /* Contenedor de la Tabla / Sección Blanca */
-        .crud-container {
-            background-color: #ffffff;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
-        }
-
-        .crud-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .crud-header h2 {
-            font-size: 22px;
-            font-weight: 600;
-            color: #1a202c;
-            margin: 0;
-        }
-
-        .btn-add {
-            background-color: #2563eb;
-            color: #ffffff;
-            padding: 12px 24px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: background-color 0.2s;
-        }
-
-        .btn-add:hover {
-            background-color: #1d4ed8;
-        }
-
-        /* Tabla Estilizada */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-
-        .data-table th {
-            color: #a0aec0;
-            font-size: 13px;
-            text-transform: uppercase;
-            font-weight: 600;
-            padding: 16px 20px;
-            border-bottom: 1px solid #edf2f7;
-        }
-
-        .data-table td {
-            padding: 20px;
-            border-bottom: 1px solid #edf2f7;
-            color: #2d3748;
-            font-size: 15px;
-        }
-
-        .course-title {
-            font-weight: 600;
-            color: #1a202c;
-        }
-
-        /* Badges de Estado */
-        .badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            display: inline-block;
-        }
-
-        .badge-active {
-            background-color: #e6fffa;
-            color: #319795;
-        }
-
-        .badge-paused {
-            background-color: #feebc8;
-            color: #dd6b20;
-        }
-
-        /* Botones de Acción */
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn-action {
-            padding: 8px 14px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            border: 1px solid #e2e8f0;
-            color: #4a5568;
-            background: #ffffff;
-            transition: all 0.2s;
-        }
-
-        .btn-action:hover {
-            background-color: #f7fafc;
-            border-color: #cbd5e0;
-        }
-
-        .btn-delete:hover {
-            background-color: #fff5f5;
-            border-color: #fed7d7;
-            color: #e53e3e;
-        }
-    </style>
 </head>
 <body>
 
@@ -233,83 +51,108 @@ if (session_status() === PHP_SESSION_NONE) {
     <div class="main-container">
         
         <header class="topbar">
-            <div class="search-container">
+            <div class="search-wrapper">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Buscar curso por código o nombre...">
+                <input type="text" class="search-input" id="inputBuscarCurso" placeholder="Buscar curso o profesor..." onkeyup="filtrarCursos()">
             </div>
-            
             <div class="user-profile">
-                <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar">
-                <span><?php echo $_SESSION['usuario'] ?? 'josegregorioraveloinfante@gmail.com'; ?> <i class="fa-solid fa-chevron-down" style="font-size: 11px; margin-left: 6px; color: #777;"></i></span>
+                <div class="user-avatar"><i class="fa-regular fa-user"></i></div>
+                <span><?php echo $_SESSION['usuario'] ?? 'Administrador'; ?></span>
             </div>
         </header>
 
-        <main class="content-wrapper">
-            
-            <div class="crud-container">
-                <div class="crud-header">
+        <main class="content">
+            <div class="card-table">
+                
+                <div class="table-header">
                     <h2>Gestión de Cursos</h2>
-                    <a href="registrar_curso.php" class="btn-add">
-                        <i class="fa-solid fa-plus"></i> Registrar Curso
-                    </a>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <button class="btn-register" onclick="window.location.href='registrar_curso.php'">
+                            <i class="fa-solid fa-plus"></i> Nuevo Curso
+                        </button>
+                    </div>
                 </div>
 
-                <table class="data-table">
+                <table>
                     <thead>
                         <tr>
-                            <th>Código</th>
-                            <th>Curso / Especialidad</th>
-                            <th>Alumnos Inscritos</th>
+                            <th>Curso</th>
+                            <th>Profesor</th>
                             <th>Estado</th>
-                            <th>Acciones Disponibles</th>
+                            <th>Alumnos Inscritos</th>
+                            <th style="text-align: center;">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tablaCursosBody">
+                        <?php
+                        if (mysqli_num_rows($resultado) > 0) {
+                            while ($reg = mysqli_fetch_array($resultado)) { 
+                                // Determinar si está activo para ponerle color verde o gris
+                                $estadoClase = ($reg['estado'] == 'Activo') ? 'badge-status' : 'badge-status inactive';
+                        ?>
                         <tr>
-                            <td><strong>ASP</strong></td>
-                            <td class="course-title">Cursos Inglés Avanzado</td>
-                            <td>45 Estudiantes</td>
-                            <td><span class="badge badge-active">Activo</span></td>
                             <td>
-                                <div class="action-buttons">
-                                    <a href="#" class="btn-action"><i class="fa-solid fa-eye"></i> Mostrar</a>
-                                    <a href="#" class="btn-action"><i class="fa-solid fa-pen"></i> Modificar</a>
-                                    <a href="#" class="btn-action btn-delete"><i class="fa-solid fa-trash"></i> Eliminar</a>
+                                <div class="student-cell">
+                                    <div class="avatar-circle" style="background-color: #f1f5f9; color: #475569;">
+                                        <i class="fa-solid fa-book-open" style="font-size: 14px;"></i>
+                                    </div>
+                                    <strong><?php echo htmlspecialchars($reg['nombre_curso']); ?></strong>
+                                </div>
+                            </td>
+                            <td><?php echo htmlspecialchars($reg['profesor']); ?></td>
+                            <td><span class="<?php echo $estadoClase; ?>"><?php echo htmlspecialchars($reg['estado']); ?></span></td>
+                            <td>
+                                <span style="font-weight:600; color:#3b82f6; background: #eff6ff; padding: 4px 10px; border-radius: 6px;">
+                                    <?php echo $reg['total_alumnos']; ?> <i class="fa-solid fa-user-group" style="font-size:12px; margin-left:4px;"></i>
+                                </span>
+                            </td>
+                            <td>
+                                <div class="actions" style="justify-content: center;">
+                                    <button class="btn-action btn-edit" title="Modificar" onclick="window.location.href='modificar_curso.php?codigo=<?php echo $reg['codigo']; ?>'">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+                                    <button class="btn-action btn-delete" title="Eliminar" onclick="confirmarEliminarCurso('<?php echo $reg['codigo']; ?>')">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td><strong>INY</strong></td>
-                            <td class="course-title">Cursos Iny</td>
-                            <td>32 Estudiantes</td>
-                            <td><span class="badge badge-active">Activo</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="#" class="btn-action"><i class="fa-solid fa-eye"></i> Mostrar</a>
-                                    <a href="#" class="btn-action"><i class="fa-solid fa-pen"></i> Modificar</a>
-                                    <a href="#" class="btn-action btn-delete"><i class="fa-solid fa-trash"></i> Eliminar</a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>WBS</strong></td>
-                            <td class="course-title">Web Sairs - Frontend</td>
-                            <td>28 Estudiantes</td>
-                            <td><span class="badge badge-paused">En Pausa</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="#" class="btn-action"><i class="fa-solid fa-eye"></i> Mostrar</a>
-                                    <a href="#" class="btn-action"><i class="fa-solid fa-pen"></i> Modificar</a>
-                                    <a href="#" class="btn-action btn-delete"><i class="fa-solid fa-trash"></i> Eliminar</a>
-                                </div>
-                            </td>
-                        </tr>
+                        <?php 
+                            }
+                        } else {
+                            echo "<tr><td colspan='5' style='text-align:center; padding:40px;'>No hay cursos registrados.</td></tr>";
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
-
         </main>
     </div>
 
+    <script>
+        function filtrarCursos() {
+            let textoBuscar = document.getElementById('inputBuscarCurso').value.toLowerCase();
+            let filas = document.querySelectorAll('#tablaCursosBody tr');
+            
+            filas.forEach(fila => {
+                if(fila.cells.length > 1) {
+                    let textoFila = fila.innerText.toLowerCase();
+                    if (textoFila.includes(textoBuscar)) {
+                        fila.style.display = '';
+                    } else {
+                        fila.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        function confirmarEliminarCurso(codigo) {
+            if (confirm('¿Seguro que desea eliminar el curso con código: ' + codigo + '?')) {
+                // Aquí deberías redirigir a tu archivo que elimina cursos
+                window.location.href = 'procesar_curso.php?accion=eliminar&codigo=' + codigo;
+            }
+        }
+    </script>
 </body>
 </html>
+<?php mysqli_close($conexion); ?>
