@@ -1,19 +1,10 @@
 FROM php:8.1-apache
 
-RUN apt-get update && apt-get install -y \
-    mariadb-server \
-    mariadb-client \
-    && docker-php-ext-install mysqli pdo pdo_mysql \
-    && rm -rf /var/lib/apt/lists/*
+# Instalar extensiones necesarias para la base de datos
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-RUN mkdir -p /var/run/mysqld && chown -R mysql:mysql /var/run/mysqld
-
+# Copiar el código al servidor web
 COPY . /var/www/html/
 
+# Exponer el puerto 80
 EXPOSE 80
-
-CMD mysqld --user=mysql & \
-    sleep 5 && \
-    mysql -e "CREATE DATABASE IF NOT EXISTS base1;" && \
-    mysql base1 < /var/www/html/database.sql && \
-    apache2-foreground
