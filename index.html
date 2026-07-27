@@ -1,52 +1,106 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>English for Future</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css"> <!-- Aquí va tu toque personalizado -->
-</head>
-<body>
-  <!-- Header -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
-      <a class="navbar-brand fw-bold" href="#">ENGLISH FOR FUTURE</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="#">Courses</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-          <li class="nav-item"><a class="nav-link" href="login.php">Log in</a></li>
-        </ul>
-      </div>
+  <title>AYR</title>
+ </head>
+ <body>
+<section class="ayr-comps-section">
+   <h2 class="ayr-headline">Descubre la nueva AYR Pass Lite</h2>
+  <div class="ayr-comps-container">
+       <!-- Ventaja 1 -->
+    <div class="ayr-comp-card">
+          <div class="ayr-icon">📱</div>
+            <h3>Apertura móvil</h3>
+    <p>Controla el acceso a tu hogar directamente desde tu smartphone con la app  inteligente.</p>
     </div>
-  </nav>
+
+    <!-- Ventaja 2 -->
+    <div class="ayr-comp-card">
+       <div class="ayr-icon">🔐</div>
+         <h3>Gestión de accesos</h3>
+        <p>Otorga y revoca permisos de entrada temporales o permanentes en tiempo real.</p>
+    </div>
+
+    <!-- Ventaja 3 -->
+  <div class="ayr-comp-card">
+      <div class="ayr-icon">🔋</div>
+       <h3>Autonomía de batería</h3>
+       <p>Sistema de bajo consumo energético con alertas anticipadas de recarga.</p>
+    </div>
+  </div>
+
+  <div class="ayr-cta-wrapper">
+     <a href="#" class="btn-ayr-custom">Comprar ahora</a>
+ </div>
+</section>
+
+
+
+<!-- ESTILOS CSS -->
+<style>
+  .ayr-comps-section {
+    padding: 60px 20px;
+    text-align: center;
+    font-family: sans-serif;
+  }
+
+  .ayr-headline {
+    margin-bottom: 40px;
+    font-size: 2rem;
+  }
+
+  /* Contenedor principal con Flexbox */
+  .ayr-comps-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto 40px auto;
+  }
+
+
+  .ayr-comp-card {
+    flex: 1; /* Cada columna ocupa el mismo ancho */
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 10px;
+  }
+
+  .ayr-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  /* Botón personalizado */
+  .btn-ayr-custom {
+    display: inline-block;
+    padding: 15px 40px;
+    background-color: #0056b3;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: 0.3s;
+  }
+
+  .btn-ayr-custom:hover {
+    background-color: #003d82;
+  }
+
+  /* RESPONSIVE: Apilamiento vertical en móviles */
+  @media (max-width: 768px) {
+    .ayr-comps-container {
+      flex-direction: column; /* Cambia a vertical */
+    }
+    
+    .ayr-comp-card {
+      margin-bottom: 15px;
+    }
+  }
+</style>
 
  
-
-      <!-- Columna de imagen -->
-<div class="col-lg-6 mb-4 mb-lg-0">
-  <h1 class="display-4 fw-bold">Learn English Online</h1>
-  <p class="lead">Improve your English skills with our online courses for all levels.</p>
-  <div class="btn-with-image mt-3">
-    <a href="#" class="btn btn-warning btn-lg">Get Started</a>
-    <img src="img/laptop.png" class="laptop-img" alt="Laptop">
-  </div>
-</div>
-
-  <!-- Featured Section -->
-  <section class="py-5 bg-body-tertiary text-center">
-    <div class="container">
-      <h2 class="mb-3 text-primary">Featured Courses</h2>
-      <p>Explore our range of courses for beginners, intermediate, and advanced students.</p>
-    </div>
-  </section>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

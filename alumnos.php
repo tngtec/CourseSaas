@@ -59,24 +59,27 @@ $resultado = mysqli_query($conexion, $query);
 
         <main class="content">
             <div class="card-table">
-                <div class="table-header">
-                    <h2>Gestión de Alumnos</h2>
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                        <select class="filter-select" id="filtroCurso" onchange="filtrarAlumnos()">
-                            <option value="">🔍 Filtrar por Curso: Todos</option>
-                            <?php
-                            // Opcional: Cargar cursos dinámicamente en el filtro
-                            $resCursos = mysqli_query($conexion, "SELECT nombre_curso FROM cursos");
-                            while($c = mysqli_fetch_array($resCursos)) {
-                                echo "<option value='{$c['nombre_curso']}'>{$c['nombre_curso']}</option>";
-                            }
-                            ?>
-                        </select>
-                        <button class="btn-register" onclick="window.location.href='registrar_alumno.php'">
-                            <i class="fa-solid fa-user-plus"></i> Registrar Alumno
-                        </button>
-                    </div>
-                </div>
+                <div class="table-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h2>Gestión de Alumnos</h2>
+    
+    <div style="display: flex; gap: 15px; align-items: center;">
+        
+        <select class="form-select" style="width: 200px; padding: 8px;" id="filtroCurso" onchange="filtrarAlumnos()">
+            <option value="">Filtrar por Curso: Todos</option>
+            <?php
+            // Carga dinámica de cursos
+            $resCursos = mysqli_query($conexion, "SELECT nombre_curso FROM cursos");
+            while($c = mysqli_fetch_array($resCursos)) {
+                echo "<option value='{$c['nombre_curso']}'>{$c['nombre_curso']}</option>";
+            }
+            ?>
+        </select>
+
+        <button class="btn-register" onclick="window.location.href='registrar_alumno.php'" style="padding: 8px 16px;">
+            <i class="fa-solid fa-user-plus"></i> Registrar Alumno
+        </button>
+      </div>
+    </div>
 
                 <table>
                     <thead>

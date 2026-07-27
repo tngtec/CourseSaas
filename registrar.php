@@ -11,7 +11,7 @@ $cedula  = $_POST['clave']; // Asegúrate de que en tu HTML el input de la cédu
 // $cedula_encriptada = password_hash($cedula, PASSWORD_DEFAULT);
 
 // 2. Preparar la consulta con los nombres exactos de tu BD (nombre, mail, cedula)
-$sql = "INSERT INTO alumnos (nombre, mail, cedula) VALUES (?, ?, ?)";
+$sql = "INSERT INTO usuarios (nombre, mail, cedula) VALUES (?, ?, ?)";
 $stmt = $conn->prepare($sql);
 
 // 3. Vincular las variables reales que definimos arriba
