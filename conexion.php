@@ -1,15 +1,14 @@
-
 <?php
-//conexión central a la base de datos
-$host = "localhost";  // El servidor de la base de datos
-$usuario = "root";   // Nombre de usuario con el que se accede
-$contrasena = "";   // Contraseña del usuario
+// Conexión central a la base de datos (Aiven Cloud)
+$host = "mysql-3aa764ad-josegregoriraveloinfante-e24b.l.aivencloud.com";
+$usuario = "avnadmin";
+$contrasena = "18169247"; 
+$base = "defaultdb";
+$puerto = 21389;
 
-$base = "base1";   // <--- CAMBIADO AQUÍ: De 'mi_base' a 'base1'
+$conn = new mysqli($host, $usuario, $contrasena, $base, $puerto);
 
-
-$conn = new mysqli($host, $usuario, $contrasena, $base);
 if ($conn->connect_error) {
-  die("Conexión fallida: " . $conn->connect_error);
+    die("Conexión fallida: " . $conn->connect_error);
 }
 ?>
