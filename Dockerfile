@@ -1,19 +1,18 @@
 FROM php:8.1-apache
 
-# Instalar MariaDB server, client y extensiones de PHP
 RUN apt-get update && apt-get install -y \
     mariadb-server \
     mariadb-client \
     && docker-php-ext-install mysqli pdo pdo_mysql \
     && rm -rf /var/lib/apt/lists/*
 
-# Copiar los archivos del proyecto al servidor web
+RUN mkdir -p /var/run/mysqld && chown -R mysql:mysql /var/run/mysqld
+
 COPY . /var/www/html/
 
 EXPOSE 80
 
-# Inicializar MariaDB correctamente e importar la base de datos base1
-CMD mysqld_safe --skip-grant-tables & \
+CMD mysqld --user=mysql & \
     sleep 5 && \
     mysql -e "CREATE DATABASE IF NOT EXISTS base1;" && \
     mysql base1 < /var/www/html/database.sql && \
